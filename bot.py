@@ -32,4 +32,12 @@ async def heh(ctx, count_heh = 5):
 async def passw(ctx, panjang = 5):
     await ctx.send(genn_pass(panjang))
 
+@bot.command()
+async def joined(ctx, member: discord.Member):
+    await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}')
+
+@bot.command(name='bot')
+async def confidence(ctx):
+    await ctx.send('Yes, the bot is cool.')
+
 bot.run(token)
