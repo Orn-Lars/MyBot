@@ -6,6 +6,18 @@ from main import genn_pass
 with open("token.txt", "r") as f:
     token = f.read()
 
+sampah = {
+    'kertas' : 'anorganik',
+    'plastik' : 'anorganik',
+    'kardus' : 'anorganik',
+    'sisa_makanan': 'organik',
+    'daun_kering' : 'organik',
+    'kulit_buah' : 'organik',
+    'baterai' : 'B3',
+    'oli' : 'B3',
+    'deterjen' : 'B3'
+}
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -68,5 +80,24 @@ async def cat(ctx):
     with open(f'catimg/{cat_img}', 'rb') as f:
         picture = discord.File(f)
     await ctx.send(file=picture)
+
+@bot.command("sampah")
+async def jenis_sampah(ctx, item:str):
+    if item.lower() in sampah:
+        await ctx.send(f"{item.capitalize()} merupakan jenis sampah: {sampah[item.lower()]}")
+    else:
+        await ctx.send(f"Maaf, {item.capitalize()} tidak tercatat di dalam daftar")
+
+@bot.command()
+async def organik(ctx):
+    await ctx.send(f'Sampah jenis organik dapat diolah menjadi pupuk kompos, makanan hewan, eco enzyme, dan biogas')
+
+@bot.command()
+async def anorganik(ctx):
+    await ctx.send(f'Sampah jenis anorganik dapat diolah menjadi kerajinan tangan, bahan daur ulang, eco brick')
+
+@bot.command()
+async def B3(ctx):
+    await ctx.send(f'Sampah jenis B3 dapat diolah dengan melakukan pemilahan, membuangnya ke pembuangan khusus')
 
 bot.run(token)
